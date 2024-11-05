@@ -8,13 +8,14 @@ If application fails to respond twice in a row, Docker will mark the container a
 
 1. Add the **healthcheck** configuration in docker-compose.yml
 ```
-    service:
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
-      interval: 1m
-      timeout: 10s
-      retries: 2
-      start_period: 30s
+services:
+    app1:
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+        interval: 1m
+        timeout: 10s
+        retries: 2
+        start_period: 30s
 ```
 
 2. Download the script and set up a cron job to run it every 1 minute
