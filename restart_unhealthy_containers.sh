@@ -17,7 +17,7 @@ if [ -n "$unhealthy_containers" ]; then
     container_uptime=$(docker inspect -f '{{ .State.StartedAt }}' "$container_id")
     container_restart_count=$(docker inspect -f '{{ .RestartCount }}' "$container_id")
     container_image=$(docker inspect -f '{{ .Config.Image }}' "$container_id")
-    container_logs=$(docker logs --tail 20 "$container_id" 2>&1 | sed 's/^/    /')
+    container_logs=$(docker logs --tail 130 "$container_id" 2>&1 | sed 's/^/    /')
     container_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$container_id")
 
     system_memory_free=$(free -h | awk '/Mem:/ {print $4}')
