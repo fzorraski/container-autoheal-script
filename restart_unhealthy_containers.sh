@@ -24,7 +24,7 @@ if [ -n "$unhealthy_containers" ]; then
     system_memory_total=$(free -h | awk '/Mem:/ {print $2}')
     system_cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print 100 - $8 "%"}')
     system_top5_cpu_usage=$(ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%cpu | head -n 6)
-    system_top5_memory_usage=$(ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head -n 6
+    system_top5_memory_usage=$(ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head -n 6)
     system_recent_logs_erros=$(journalctl -p 3 -xb | tail -n 15)
     disk_usage=$(df -h / | awk 'NR==2 {print $4}')
 
