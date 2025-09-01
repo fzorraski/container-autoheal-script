@@ -23,6 +23,9 @@ if [ -n "$unhealthy_containers" ]; then
     system_memory_free=$(free -h | awk '/Mem:/ {print $4}')
     system_memory_total=$(free -h | awk '/Mem:/ {print $2}')
     system_cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print 100 - $8 "%"}')
+    system_top5_cpu_usage=$(ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%cpu | head -n 6)
+    system_top5_memory_usage=$(ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head -n 6
+    system_recent_logs_erros=$(journalctl -p 3 -xb | tail -n 15)
     disk_usage=$(df -h / | awk 'NR==2 {print $4}')
 
     log "Restarting container: $container_name ($container_id)"
@@ -35,6 +38,9 @@ if [ -n "$unhealthy_containers" ]; then
     log "Available disk space: $disk_usage"
     log "System free memory: $system_memory_free / $system_memory_total"
     log "System CPU usage: $system_cpu_usage"
+    log "Top 5 CPU Consuming Process: $system_top5_cpu_usage"
+    log "Top 5 Memory Consuming Process: $system_top5_memory_usage"
+    log "Recent Erros in System Logs: $system_recent_logs_erros"
     log "Recent container logs:\n$container_logs"
 
     docker restart "$container_id"
